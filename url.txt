@@ -1,3 +1,60 @@
 https://github.com/insidepacket/1000apis/blob/main/make1000apicalls.py
 https://api.apis.guru/v2/list.json >>>>>> for large dataset
 https://pytest-with-eric.com/introduction/pytest-assert-exception/
+
+
+
+-----------------------------------------------------------------------------------------
+The Python Standard Library
+https://docs.python.org/3.8/library/index.html
+
+
+sys.stdlib_module_names
+A frozenset of strings containing the names of standard library modules.
+
+It is the same on all platforms. Modules which are not available on some platforms and modules disabled at Python build are also listed. 
+All module kinds are listed: pure Python, built-in, frozen and extension modules. Test modules are excluded.
+
+For packages, only the main package is listed: sub-packages and sub-modules are not listed. 
+For example, the email package is listed, but the email.mime sub-package and the email.message sub-module are not listed.
+
+See also the sys.builtin_module_names list.
+
+def checkStdModule(mod_name):
+    import sys
+    for mod in sys.stdlib_module_names:
+        if mod_name == mod:
+            return True
+    else:
+        return False
+    
+>>> checkStdModule('ipaddress')
+True
+>>> 
+-----------------------------------------------------------------------------------------
+from ipaddress import ip_address
+def isValidIP(ipStr=None):
+    if ipStr is None:
+        return False
+    if "/" in ipStr:
+        # ip address also have netmask check number must be in range 1..32
+        # slip and trim
+        (ip,mask) = ipStr.split("/")
+        try:
+            mask = int(mask)
+##            print(mask)
+            if 8 <= mask <= 32:
+##                print(ip)
+                ip_address(ip)
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
+    try:
+        ip_address(ipStr)
+        return True
+    except ValueError:
+        return False
+-----------------------------------------------------------------------------------------
+
